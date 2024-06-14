@@ -1,0 +1,39 @@
+import matplotlib.pyplot as plt
+
+# Initialize an empty dictionary to store tool and vulnerability counts
+tool_vul_counts = {}
+
+# Loop through your list of vulnerabilities (rs_vul_list assumed to be a list of tuples with tool name and vulnerability details)
+for tool, vulnerability_details in rs_vul_list:
+    # Check if the tool is already in the dictionary, if not add it with a count of 1
+    if tool not in tool_vul_counts:
+        tool_vul_counts[tool] = 1
+    else:
+        # If the tool is already in the dictionary, increment its count by 1
+        tool_vul_counts[tool] += 1
+
+# Print the tool_vul_counts dictionary to see the counts
+print(tool_vul_counts)
+
+# Data for the bar chart
+categories = ['Vulnerability Checks', 'Skipped Checks', 'Vulnerabilities Detected']
+counts = [len(tool_names), rs_skipped_checks, len(rs_vul_list)]
+
+# Plotting bar chart
+plt.figure(figsize=(8, 6))
+plt.bar(categories, counts, color=['green', 'orange', 'red'])
+plt.title('Vulnerability Summary')
+plt.ylabel('Count')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.savefig('vulnerability_summary.pdf')  # Save the plot as PDF
+plt.close()  # Close the current figure
+
+# Plotting pie chart
+plt.figure(figsize=(8, 6))
+plt.pie(tool_vul_counts.values(), labels=tool_vul_counts.keys(), autopct='%1.1f%%', startangle=140)
+plt.title('Vulnerabilities Detected by Tool')
+plt.axis('equal')
+plt.savefig('vulnerabilities_by_tool.pdf')  # Save the plot as PDF
+plt.close()  # Close the current figure
+
+print("PDFs are Saved Successfully")
